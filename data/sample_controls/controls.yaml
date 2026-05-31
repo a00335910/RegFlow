@@ -1,0 +1,99 @@
+# Sample enterprise controls — represents a fictitious mid-size financial-services
+# company's existing compliance controls. Curated to plausibly match SOME (but not
+# all) obligations extracted from GDPR / SEC rules, so Agent 4 has interesting gaps
+# to find rather than "everything matches" or "nothing matches."
+#
+# Each control: name, description, category, owner, business_unit, optional evidence_uri.
+
+controls:
+  - name: "Data Retention Policy"
+    description: "Defines retention periods for personal data by category. Default 24 months for marketing data; 7 years for transaction records (audit/regulatory). Quarterly automated deletion of expired records."
+    category: data_protection
+    control_owner: "DPO Office"
+    business_unit: "Legal & Compliance"
+    evidence_uri: "s3://compliance-docs/policies/data-retention-v3.2.pdf"
+
+  - name: "Personal Data Breach Notification Procedure"
+    description: "Process for detecting, escalating and reporting personal data breaches. Targets 48-hour internal escalation and 96-hour external notification."
+    category: data_protection
+    control_owner: "DPO Office"
+    business_unit: "Information Security"
+    evidence_uri: "s3://compliance-docs/sops/breach-notification-v2.1.pdf"
+
+  - name: "Data Subject Access Request Workflow"
+    description: "Workflow for handling DSAR requests. Tracks request, identity verification, data collection across systems, and response. Target SLA 30 calendar days."
+    category: data_protection
+    control_owner: "Privacy Operations"
+    business_unit: "Legal & Compliance"
+
+  - name: "Encryption at Rest Standard"
+    description: "All customer PII must be encrypted at rest using AES-256. Key rotation every 90 days. Database TDE enabled across all prod stores."
+    category: information_security
+    control_owner: "CISO Office"
+    business_unit: "Information Security"
+
+  - name: "Access Control Policy"
+    description: "Role-based access control with least-privilege defaults. Quarterly access reviews; immediate revocation on role change."
+    category: information_security
+    control_owner: "IT Security"
+    business_unit: "Information Security"
+
+  - name: "Third-Party / Vendor Risk Assessment"
+    description: "Annual vendor risk reviews for any vendor processing customer data. Includes SOC2/ISO27001 verification and contractual data processing agreement."
+    category: vendor_risk
+    control_owner: "Vendor Risk Management"
+    business_unit: "Procurement"
+
+  - name: "Records of Processing Activities (ROPA)"
+    description: "Centralised register of personal-data processing activities per Article 30 GDPR. Updated quarterly; covers controller and processor roles."
+    category: data_protection
+    control_owner: "DPO Office"
+    business_unit: "Legal & Compliance"
+
+  - name: "Section 16(a) Insider Filing Procedure"
+    description: "Process for tracking and filing Forms 3, 4, and 5 for directors and officers within SEC-mandated deadlines (2 business days for Form 4)."
+    category: financial_reporting
+    control_owner: "Corporate Secretary"
+    business_unit: "Legal"
+
+  - name: "Whistleblower / Insider Reporting Channel"
+    description: "Anonymous reporting channel for employees to report compliance concerns. Investigated by compliance team within 5 business days."
+    category: governance
+    control_owner: "Chief Compliance Officer"
+    business_unit: "Legal & Compliance"
+
+  - name: "Anti-Money Laundering Program"
+    description: "BSA/AML program covering customer due diligence, transaction monitoring, SAR filing, and OFAC sanctions screening."
+    category: financial_crime
+    control_owner: "MLRO"
+    business_unit: "Financial Crime Prevention"
+
+  - name: "Trade Surveillance System"
+    description: "Real-time monitoring of trading activity for market abuse patterns (spoofing, layering, insider trading). Daily exception reporting to Compliance."
+    category: market_conduct
+    control_owner: "Head of Surveillance"
+    business_unit: "Trading Compliance"
+
+  - name: "Code of Conduct & Annual Attestation"
+    description: "Annual employee attestation to the firm's code of conduct, including conflicts of interest, gifts policy, and personal trading rules."
+    category: governance
+    control_owner: "Chief Compliance Officer"
+    business_unit: "HR & Compliance"
+
+  - name: "Security Incident Response Plan"
+    description: "Defined IR playbook covering detection, containment, eradication, recovery, and post-incident review. Quarterly tabletop exercise."
+    category: information_security
+    control_owner: "CISO Office"
+    business_unit: "Information Security"
+
+  - name: "Customer Identification Program (CIP)"
+    description: "KYC procedures verifying customer identity at onboarding. Documented evidence retained for the relationship duration plus 5 years."
+    category: financial_crime
+    control_owner: "MLRO"
+    business_unit: "Onboarding"
+
+  - name: "Business Continuity & Disaster Recovery Plan"
+    description: "RTO 4 hours, RPO 1 hour for critical systems. Annual full-recovery exercise; quarterly partial drills."
+    category: operational_resilience
+    control_owner: "Head of Operational Risk"
+    business_unit: "Operations"

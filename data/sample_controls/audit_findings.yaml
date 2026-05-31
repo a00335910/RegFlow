@@ -1,0 +1,108 @@
+# Real public regulatory enforcement actions (curated for portfolio realism).
+#
+# These are not internal audit findings — they're EXTERNAL PRECEDENTS the firm
+# tracks as part of its compliance risk register. A real compliance team monitors
+# these to learn from competitors' fines. They serve the same purpose for Agent 4:
+# bias risk scores upward when an obligation touches an area with recent enforcement.
+#
+# Every entry below references a real, publicly documented case. status=external_precedent
+# distinguishes them from internal findings (which would have status=open|resolved).
+
+findings:
+  - finding_ref: "EXT-2020-ICO-BA"
+    finding_text: "British Airways fined £20M (originally £183M, reduced for COVID-19 financial impact) by the UK ICO in October 2020 for the 2018 Magecart breach that exposed ~430,000 customer records. ICO cited insufficient security testing and inadequate boundary controls between IT environments."
+    category: data_protection
+    status: external_precedent
+    year: 2020
+    related_control_names:
+      - "AC-2 Account Management"
+      - "SC-7 Boundary Protection"
+      - "SI-4 System Monitoring"
+
+  - finding_ref: "EXT-2020-ICO-MAR"
+    finding_text: "Marriott International fined £18.4M by the UK ICO in October 2020 for the breach of Starwood reservation database affecting ~339M guest records (discovered 2018, originated 2014). ICO highlighted insufficient due diligence at acquisition and ongoing monitoring failures."
+    category: vendor_risk
+    status: external_precedent
+    year: 2020
+    related_control_names:
+      - "SA-4 Acquisition Process"
+      - "SR-6 Supplier Assessments and Reviews"
+      - "SI-4 System Monitoring"
+
+  - finding_ref: "EXT-2020-HMBFDI-HM"
+    finding_text: "H&M Hennes & Mauritz Online Shop fined €35.3M by the Hamburg DPA in October 2020 for excessive monitoring of employees in the Nuremberg service center, including notes on family circumstances and health, used in employment decisions. GDPR Art 6 lawfulness violation."
+    category: data_protection
+    status: external_precedent
+    year: 2020
+    related_control_names:
+      - "PT-2 Authority to Process Personally Identifiable Information"
+      - "PT-4 Consent"
+
+  - finding_ref: "EXT-2021-CNPD-AMZ"
+    finding_text: "Amazon Europe Core fined €746M by the Luxembourg CNPD in July 2021 — the largest GDPR fine to date. Stemmed from a 2018 complaint alleging behavioral advertising practices lacked valid consent. Amazon is appealing."
+    category: data_protection
+    status: external_precedent
+    year: 2021
+    related_control_names:
+      - "PT-4 Consent"
+      - "PT-5 Privacy Notice"
+      - "PT-6 System of Records Notice"
+
+  - finding_ref: "EXT-2022-CALAG-SEPHORA"
+    finding_text: "Sephora settled with the California Attorney General for $1.2M in August 2022 — the first major CCPA enforcement action. AG alleged Sephora failed to disclose that it sold consumer personal information to advertising partners and did not honor Global Privacy Control signals."
+    category: data_protection
+    status: external_precedent
+    year: 2022
+    related_control_names:
+      - "PT-5 Privacy Notice"
+      - "PT-7 Specific Categories of Personally Identifiable Information"
+
+  - finding_ref: "EXT-2023-DPC-META"
+    finding_text: "Meta Platforms Ireland fined €1.2B by the Irish DPC in May 2023 for transfers of EU users' personal data to the US under SCCs that the DPC ruled inadequate following Schrems II. Largest single GDPR fine; Meta is appealing."
+    category: data_protection
+    status: external_precedent
+    year: 2023
+    related_control_names:
+      - "PT-4 Consent"
+      - "SC-12 Cryptographic Key Establishment and Management"
+      - "AC-21 Information Sharing"
+
+  - finding_ref: "EXT-2021-SEC-JPM-RECORDKEEPING"
+    finding_text: "JPMorgan Securities fined $125M by the SEC (and $75M by CFTC) in December 2021 for widespread recordkeeping failures — staff used personal devices and WhatsApp/text messages for firm business, evading written supervision requirements under Exchange Act Section 17(a)."
+    category: financial_reporting
+    status: external_precedent
+    year: 2021
+    related_control_names:
+      - "AU-2 Event Logging"
+      - "AU-12 Audit Record Generation"
+      - "AT-3 Role-Based Training"
+
+  - finding_ref: "EXT-2023-SEC-MULTIPLE-RECORDKEEPING"
+    finding_text: "SEC and CFTC announced charges against 16 financial firms in 2023 totaling $1.8B in combined penalties for off-channel communications (WhatsApp, personal text) failures violating recordkeeping rules. Industry-wide enforcement sweep."
+    category: financial_reporting
+    status: external_precedent
+    year: 2023
+    related_control_names:
+      - "AU-2 Event Logging"
+      - "AU-12 Audit Record Generation"
+      - "AC-17 Remote Access"
+
+  - finding_ref: "EXT-2019-FTC-EQUIFAX"
+    finding_text: "Equifax agreed to settle with FTC, CFPB, and 50 US states for up to $575M (later $700M+) in July 2019 over the 2017 breach exposing PII of ~147M consumers. Cited failure to patch a known critical vulnerability for months, weak network segmentation, and unencrypted credentials in plaintext."
+    category: data_protection
+    status: external_precedent
+    year: 2019
+    related_control_names:
+      - "SI-2 Flaw Remediation"
+      - "SC-7 Boundary Protection"
+      - "IA-5 Authenticator Management"
+
+  - finding_ref: "EXT-2024-FINRA-ROBINHOOD"
+    finding_text: "FINRA fined Robinhood Financial $70M in 2021 (largest FINRA penalty at the time) for systemic supervisory failures, system outages causing customer harm, and misleading communications about margin trading. Cited Rule 3110 supervision failings."
+    category: market_conduct
+    status: external_precedent
+    year: 2021
+    related_control_names:
+      - "AT-3 Role-Based Training"
+      - "CP-2 Contingency Plan"
+      - "IR-4 Incident Handling"

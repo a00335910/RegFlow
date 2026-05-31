@@ -1,0 +1,30 @@
+# Sources the ingestion layer will pull. v0.1 = EUR-Lex only.
+# CELEX format: <sector><year><type><number>. See feeds/connectors/eur_lex.py.
+
+eur_lex:
+  celex_ids:
+    - "32016R0679"   # GDPR  — General Data Protection Regulation
+    - "32014R0596"   # MAR   — Market Abuse Regulation
+    - "32014L0065"   # MiFID II  — Markets in Financial Instruments Directive
+
+federal_register:
+  # Discovery mode A: explicit document_numbers (use when you want a specific demo doc).
+  # Find them at https://www.federalregister.gov/ by clicking any rule and copying the
+  # number from the URL (.../documents/YYYY/MM/DD/<document-number>/...).
+  document_numbers: []
+
+  # Discovery mode B: query the FR search API for the most recent matches.
+  # Used when document_numbers is empty.
+  agencies:
+    - securities-and-exchange-commission
+  document_types:
+    - RULE        # Final rules
+    # - PRORULE   # Proposed rules — uncomment to also discover proposed
+  date_after: "2024-01-01"
+  max_results: 5
+
+# Placeholders for future connectors (architecture line 5):
+fca: {}
+sec_edgar: {}
+fincen: {}
+esma: {}

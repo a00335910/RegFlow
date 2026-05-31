@@ -1,0 +1,9 @@
+# Dev-only tooling. Install:  pip install -r requirements-dev.txt
+-r requirements.txt
+
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+pytest-cov>=6.0.0
+ruff>=0.8.0
+mypy>=1.13.0
+ipython>=8.30.0

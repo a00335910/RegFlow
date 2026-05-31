@@ -1,0 +1,89 @@
+# RegFlow default settings. Override via REGFLOW_* env vars or .env file.
+# Nested keys via REGFLOW_<SECTION>__<FIELD> (e.g. REGFLOW_POSTGRES__HOST=db.local).
+
+environment: dev
+log_level: INFO
+log_format: console
+
+postgres:
+  host: localhost
+  port: 5433             # host 5433 -> docker container 5432 (5432 taken by Safekube)
+  user: regflow
+  password: regflow_dev
+  database: regflow
+
+neo4j:
+  uri: bolt://localhost:7687
+  user: neo4j
+  password: regflow_dev
+  database: neo4j
+
+weaviate:
+  host: localhost
+  http_port: 8080
+  grpc_port: 50051
+  corpus_collection: RegulatoryCorpus
+  override_collection: OverrideStore
+
+minio:
+  endpoint: localhost:9000
+  access_key: regflow
+  secret_key: regflow_dev_minio
+  secure: false
+  raw_docs_bucket: regflow-raw-docs
+
+llm:
+  provider: ollama
+  base_url: http://localhost:11434
+  # Hybrid -> Full cloud after Agent 2 came online (local llama3.1:8b times out at 120s on CPU).
+  # Cloud models need `docker exec -it regflow-ollama ollama signin` first.
+  extraction_model: ollama/gpt-oss:20b-cloud     # Agent 2 obligation extraction -> cloud
+  classifier_model: ollama/gpt-oss:20b-cloud     # Agent 1 severity classifier -> cloud
+  reasoning_model:  ollama/gpt-oss:20b-cloud     # Agents 3-6 -> cloud
+  #
+  # HEAVY CLOUD (gpt-oss:120b — burns free-tier faster, more capable):
+  #   extraction_model: ollama/gpt-oss:120b-cloud
+  #   reasoning_model:  ollama/gpt-oss:120b-cloud
+  #
+  # FULL LOCAL (slow on CPU, but no quota; classifier only barely works):
+  #   extraction_model: ollama/llama3.1:8b
+  #   classifier_model: ollama/llama3.1:8b
+  #   reasoning_model:  ollama/llama3.1:8b
+  #
+  temperature: 0.0
+  request_timeout_s: 120
+  max_retries: 3
+
+embeddings:
+  model_name: BAAI/bge-m3
+  dimension: 1024
+  device: cpu          # switch to "cuda" on rented GPU
+  batch_size: 32
+  normalize: true
+
+orchestrator:
+  auto_confidence_threshold: 0.85
+  notify_confidence_threshold: 0.60
+  extraction_min_confidence: 0.55
+  conflict_high_severity_threshold: 0.75
+  gap_high_risk_threshold: 0.75
+  max_retries_per_agent: 2
+
+ingestion:
+  poll_interval_s: 3600
+  # Cloudflare-fronted sources (EUR-Lex) reject "research bot" UAs and serve a JS challenge.
+  # We send a realistic desktop browser UA so the response is the actual document.
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+  request_timeout_s: 30
+
+langfuse:
+  # LLM observability. Off by default — set enabled=true and supply both keys
+  # to start sending every complete_json() call to the Langfuse dashboard.
+  # Get keys from http://localhost:3000 → login → Settings → API Keys.
+  # Override via env: REGFLOW_LANGFUSE__ENABLED=true REGFLOW_LANGFUSE__SECRET_KEY=sk-... REGFLOW_LANGFUSE__PUBLIC_KEY=pk-...
+  enabled: false
+  host: http://localhost:3000
+  public_key: null
+  secret_key: null
+  flush_at: 1
+  flush_interval: 1.0
