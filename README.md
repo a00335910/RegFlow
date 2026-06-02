@@ -102,45 +102,6 @@ agent_2.corrections_retrieved  article_ref=art_5 count=1 top_distance=5.96e-07
 
 ---
 
-## Architecture decisions worth defending in an interview
-
-### 1. Why `FeedConnector` Protocol, not a SourceManager class?
-
-Adding a new regulator means writing one class that implements two methods (`discover()`, `fetch()`). The ingestion pipeline doesn't know or care which source produced the data — it sees a `ParsedDocument`. Demonstrated: ingestion code path is identical for EUR-Lex HTML and Federal Register JSON.
-
-### 2. Why content-hash idempotency at ingest, not at retrieval?
-
-If we re-fetch an unchanged document, `ingest_document()` returns `is_new_version=False` and skips the downstream pipeline entirely. Result: the Prefect polling flow runs every 4 hours and pays **zero LLM cost on quiet days**. Event-driven payoff materialized.
-
-### 3. Why is the Override Store split across two physical stores?
-
-It's *logically* one store — but it's a Postgres row (audit + tabular query) plus a Weaviate vector (semantic retrieval). The two halves share a `vector_uuid` join key. This preserves all five architecture-mandated properties (different schema, retention, access control, embedding target, retrieval scope) without operating a second vector DB.
-
-### 4. Why a product (not sum) for `risk_score`?
-
-```
-risk_score = enforcement_severity × business_impact × deadline_urgency
-```
-A product punishes a "low" in any dimension hard. A regulation with severe penalties but no deadline pressure and narrow scope correctly scores LOW; a sum would dilute the signal.
-
-### 5. Why batched, single-call conflict detection (Agent 3)?
-
-The LLM sees ALL source obligations + ALL retrieved cross-jurisdiction neighbors in one prompt. Pairwise calls (N×M LLM invocations) would cost 100× more without finding more conflicts — and would miss Venn-overlap patterns that require holistic context.
-
-### 6. Why does Agent 6 use **three** hallucination defenses, not one?
-
-Each layer catches different failure modes:
-- **L1 (citation-required)** kills invented control names and document codes at generation time.
-- **L2 (verifier)** catches plausible-sounding causal stories the model fabricates between real entities.
-- **L3 (Override Store)** prevents the **same** hallucination from recurring once a reviewer has corrected it.
-
-This is the production pattern at Anthropic, OpenAI, and major LLM-eval teams. Open architecture decision documented in [`architecture.pdf`](architecture.pdf) lines 187-196.
-
-### 7. Why keep hallucinated claims visible (not strip them)?
-
-The exported audit pack has a `Verifier Findings` section listing unsupported claims with reasons. Hiding hallucinations creates worse trust than exposing them — auditors want to see both the narrative AND its weaknesses to make a real decision. **Transparency beats silent correction.**
-
----
 
 ## Tech stack
 
